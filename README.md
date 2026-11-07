@@ -106,4 +106,7 @@ Fork of **Ikea_bilresa_scroll_wheel** by **jhol-byte** —
 [forum thread](https://community.home-assistant.io/t/ikea-bilresa-scroll-wheel-blueprint-matter/965365),
 [gist b2731a4d2476f530d76b9ff409f7f3a4](https://gist.github.com/jhol-byte/b2731a4d2476f530d76b9ff409f7f3a4), version 2026-04-06.
 
-The upstream gist carries no licence. See [LICENSE](LICENSE) for what that means here.
+MIT for the changes in this repository (the whitespace fix, defaults, metadata, helper scripts and
+docs). The upstream gist carries **no licence**, so its portions remain all-rights-reserved by its
+author — nothing here claims authorship of them or grants rights over them. Full scope note at the
+top of [LICENSE](LICENSE).
