@@ -1,0 +1,26 @@
+No licence is granted for this repository, and none is claimed over the upstream work it derives from.
+
+## Upstream
+
+The blueprint in `blueprints/automation/andrey-skl/ikea_bilresa_scroll_wheel.yaml` is a fork of
+**Ikea_bilresa_scroll_wheel** by **jhol-byte**:
+
+- Forum: https://community.home-assistant.io/t/ikea-bilresa-scroll-wheel-blueprint-matter/965365
+- Gist: https://gist.github.com/jhol-byte/b2731a4d2476f530d76b9ff409f7f3a4 (version 2026-04-06)
+
+The upstream gist carries **no licence**, which under default copyright means all rights are
+reserved by its author. This repository reproduces its structure and logic with one fix (see the
+blueprint description) and does not claim authorship of the original.
+
+## What that means
+
+- Do not assume you may copy, modify or redistribute this repository.
+- The changes made here (the whitespace fix, the defaults, the two helper scripts, the
+  documentation) are offered as-is, with no warranty of any kind.
+- If you want to reuse the upstream work, ask its author. If the upstream author adds a licence
+  later, this notice should be replaced by it.
+
+## Takedown
+
+If you are the upstream author and you want this removed or re-licensed, open an issue here and
+it will be handled.

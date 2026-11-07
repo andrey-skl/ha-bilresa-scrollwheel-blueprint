@@ -1,0 +1,76 @@
+# Companion script for the IKEA BILRESA scroll wheel blueprint.
+# The blueprint's `lights: color temp only` scroll branch calls script.light_color_temp_helper.
+# Create it in Home Assistant: Settings > Automations & Scenes > Scripts > Add Script >
+# (three-dot menu) Edit in YAML > paste the block below.
+#
+# Behaviour: reads the light's current color_temp_kelvin, adds ±color_temp_step and
+# clamps the result to [min_color_temp, max_color_temp] with a transition. Brightness
+# is untouched, so scrolling through warm/cool does not change how bright the room is.
+#
+# HA and the bulb round to their own grid, so the clamp lands ~1-2 K off the configured
+# bound (2200 configured was reached as 2202 on KAJPLATS bulbs).
+
+light_color_temp_helper:
+  alias: light_color_temp_helper
+  description: >-
+    Rotate a light's colour temperature one step. Companion script for the IKEA BILRESA
+    scroll wheel blueprint (its colour-temp scroll branches call
+    script.light_color_temp_helper).
+  mode: queued
+  max: 30
+  fields:
+    target_light:
+      required: true
+      selector:
+        entity:
+          domain: light
+          multiple: false
+    mode:
+      default: up
+      selector:
+        select:
+          options:
+            - up
+            - down
+    color_temp_step:
+      default: 200
+      description: Step in K. 100 K needs ~18 detents to cross 2200-4000 K.
+      selector:
+        number:
+          min: 10
+          max: 1000
+    min_color_temp:
+      default: 2200
+      selector:
+        number:
+          min: 1500
+          max: 6500
+    max_color_temp:
+      default: 4000
+      selector:
+        number:
+          min: 1500
+          max: 6500
+    light_transition_duration:
+      default: 0.5
+      selector:
+        number:
+          min: 0
+          max: 10
+          step: 0.05
+          unit_of_measurement: s
+  sequence:
+    - variables:
+        cur: "{{ state_attr(target_light, 'color_temp_kelvin') | int(3000) }}"
+        dir: "{{ 1 if mode == 'up' else -1 }}"
+        lo: "{{ min_color_temp | int(2200) }}"
+        hi: "{{ max_color_temp | int(4000) }}"
+        step: "{{ color_temp_step | int(200) }}"
+    - variables:
+        new_temp: "{{ [[cur + (step * dir), lo] | max, hi] | min | int }}"
+    - action: light.turn_on
+      target:
+        entity_id: "{{ target_light }}"
+      data:
+        color_temp_kelvin: "{{ new_temp }}"
+        transition: "{{ light_transition_duration | float(0.5) }}"
